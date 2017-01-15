@@ -5,6 +5,7 @@
 
 #include "hw/bus_driver_spi.h"
 #include "hw/display_driver_ssd1306.h"
+#include "ui/display_area.h"
 
 int main ( int argc,char **argv ) {
 	
@@ -13,6 +14,10 @@ int main ( int argc,char **argv ) {
 
 	bus.init();
 	display.init();
+
+	gameAmbiance::ui::display_area fullArea(display, 0, 0, 128, 64);
+	gameAmbiance::ui::display_area topArea(fullArea, 0, 0, 128, 16);
+	gameAmbiance::ui::display_area mainArea(fullArea, 0, 16, 128, 48);
 	
     raspicam::RaspiCam Camera; //Cmaera object
     //Open camera 
