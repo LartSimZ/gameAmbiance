@@ -1,5 +1,65 @@
 #include "display_driver_interface.h"
 
+
+#define _BV(bit) (1 << (bit))
+
+
+#define SSD_Command_Mode			0x00 	/* C0 and DC bit are 0 				 */
+#define SSD_Data_Mode					0x40	/* C0 bit is 0 and DC bit is 1 */
+
+#define SSD_Inverse_Display		0xA7
+
+#define SSD_Display_Off				0xAE
+#define SSD_Display_On				0xAF
+
+#define SSD_Set_ContrastLevel	0x81
+
+#define SSD_External_Vcc			0x01
+#define SSD_Internal_Vcc			0x02
+
+
+#define SSD_Activate_Scroll		0x2F
+#define SSD_Deactivate_Scroll	0x2E
+
+#define Scroll_Left						0x00
+#define Scroll_Right					0x01
+
+#define Scroll_2Frames		0x07
+#define Scroll_3Frames		0x04
+#define Scroll_4Frames		0x05
+#define Scroll_5Frames		0x00
+#define Scroll_25Frames		0x06
+#define Scroll_64Frames		0x01
+#define Scroll_128Frames	0x02
+#define Scroll_256Frames	0x03
+
+#define SSD1306_DISPLAYALLON_RESUME	0xA4
+#define SSD1306_DISPLAYALLON 				0xA5
+
+#define SSD1306_Normal_Display	0xA6
+
+#define SSD1306_SETDISPLAYOFFSET 		0xD3
+#define SSD1306_SETCOMPINS 					0xDA
+#define SSD1306_SETVCOMDETECT 			0xDB
+#define SSD1306_SETDISPLAYCLOCKDIV 	0xD5
+#define SSD1306_SETPRECHARGE 				0xD9
+#define SSD1306_SETMULTIPLEX 				0xA8
+#define SSD1306_SETLOWCOLUMN 				0x00
+#define SSD1306_SETHIGHCOLUMN 			0x10
+#define SSD1306_SETSTARTLINE 				0x40
+#define SSD1306_MEMORYMODE 					0x20
+#define SSD1306_COMSCANINC 					0xC0
+#define SSD1306_COMSCANDEC 					0xC8
+#define SSD1306_SEGREMAP 						0xA0
+#define SSD1306_CHARGEPUMP 					0x8D
+
+// Scrolling #defines
+#define SSD1306_SET_VERTICAL_SCROLL_AREA 							0xA3
+#define SSD1306_RIGHT_HORIZONTAL_SCROLL 							0x26
+#define SSD1306_LEFT_HORIZONTAL_SCROLL 								0x27
+#define SSD1306_VERTICAL_AND_RIGHT_HORIZONTAL_SCROLL 	0x29
+#define SSD1306_VERTICAL_AND_LEFT_HORIZONTAL_SCROLL		0x2A
+
 namespace gameAmbiance
 {
     namespace hw
@@ -44,6 +104,16 @@ namespace gameAmbiance
 
         void display_driver_ssd1306::init()
         {
+                        // SPI Reset
+			// bcm2835_gpio_write(_pinRST, HIGH);
+			// delay(1000);
+			// bcm2835_gpio_write(_pinRST, LOW);
+			// delay(10000);
+			// bcm2835_gpio_write(_pinRST, HIGH);
+
+            _busDriver.setPinOutputMode(_dcPin);
+            _busDriver.setPinOutputMode(_rstPin);
+
             sendCommand(SSD_Display_Off);                    // 0xAE
             sendCommand(SSD1306_SETDISPLAYCLOCKDIV, 0x80);      // 0xD5 + the suggested ratio 0x80
             sendCommand(SSD1306_SETMULTIPLEX, 0x3F);
@@ -66,13 +136,13 @@ namespace gameAmbiance
         {
         }
 
-        void display_driver_ssd1306::clear(bool on)
+        void display_driver_ssd1306::clear(uint32_t color)
         {
-            int c = on ? 0xFF : 0x00;
+            int c = color ? 0xFF : 0x00;
             std::memset(_screenBuffer, c, _screenWidth*_screenHeight / 8);
         }
 
-        void display_driver_ssd1306::setPixel(int16_t x, int16_t y, bool on)
+        void display_driver_ssd1306::setPixel(int16_t x, int16_t y, uint32_t color)
         {
             if ((x < 0) || (x >= _screenWidth) || (y < 0) || (y >= _screenHeight))
             {
@@ -83,13 +153,13 @@ namespace gameAmbiance
             uint8_t * target = _screenBuffer + (x + (y / 8)*_screenWidth);
 
             // x is which column
-            if (on)
+            if (color)
                 *target |= _BV((y % 8));
             else
                 *target &= ~_BV((y % 8));
         }
 
-        void display_driver_ssd1306::update()
+        void display_driver_ssd1306::render()
         {
             _busDriver.sendCommand(SSD1306_SETLOWCOLUMN | 0x0); // low col = 0
             _busDriver.sendCommand(SSD1306_SETHIGHCOLUMN | 0x0); // hi col = 0

@@ -18,20 +18,20 @@ namespace gameAmbiance
         public:
             display_area(gameAmbiance::hw::display_pixel_driver& pxlDriver, int16_t x, int16_t y, int16_t areaWidth, int16_t areaHeight);
 
-            virtual void clear(bool on) override;
-            virtual void setPixel(int16_t x, int16_t y, bool on) override;
+            virtual void clear(uint32_t color) override;
+            virtual void setPixel(int16_t x, int16_t y, uint32_t color) override;
             virtual void render() override;
 
-            void drawLine(int16_t x0, int16_t y0, int16_t x1, int16_t y1, bool on);
-            void drawVLine(int16_t x0, int16_t y0, int16_t h, bool on);
-            void drawHLine(int16_t x0, int16_t y0, int16_t w, bool on);
-            void drawRect(int16_t x, int16_t y, int16_t w, int16_t h, bool on);
-            void fillRect(int16_t x, int16_t y, int16_t w, int16_t h, bool on);
-            void drawChar(int16_t x, int16_t y, char c, uint8_t fontSize, bool on, const DisplayFont& font);
-            void drawText(int16_t x, int16_t y, const std::string& text, uint8_t fontSize, bool on, const DisplayFont& font);
+            void drawLine(int16_t x0, int16_t y0, int16_t x1, int16_t y1, uint32_t color);
+            void drawVLine(int16_t x0, int16_t y0, int16_t h, uint32_t color);
+            void drawHLine(int16_t x0, int16_t y0, int16_t w, uint32_t color);
+            void drawRect(int16_t x, int16_t y, int16_t w, int16_t h, uint32_t color);
+            void fillRect(int16_t x, int16_t y, int16_t w, int16_t h, uint32_t color);
+            void drawChar(int16_t x, int16_t y, char c, uint8_t fontSize, uint32_t color, const DisplayFont& font);
+            void drawText(int16_t x, int16_t y, const std::string& text, uint8_t fontSize, uint32_t color, const DisplayFont& font);
             void setCursorPos(int16_t x, int16_t y);
-            void putChar(char c, uint8_t fontSize, bool on, const DisplayFont& font);
-            void putText(const std::string& text, uint8_t fontSize, bool on, const DisplayFont& font);
+            void putChar(char c, uint8_t fontSize, uint32_t color, const DisplayFont& font);
+            void putText(const std::string& text, uint8_t fontSize, uint32_t color, const DisplayFont& font);
         };
     }
 }

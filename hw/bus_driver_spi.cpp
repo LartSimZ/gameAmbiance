@@ -45,13 +45,6 @@ namespace gameAmbiance
 			bcm2835_spi_setDataMode(BCM2835_SPI_MODE0);
 			bcm2835_spi_setClockDivider(BCM2835_SPI_CLOCK_DIVIDER_16); // 16 MHz
 
-			// // SPI Reset
-			// bcm2835_gpio_write(_pinRST, HIGH);
-			// delay(1000);
-			// bcm2835_gpio_write(_pinRST, LOW);
-			// delay(10000);
-			// bcm2835_gpio_write(_pinRST, HIGH);
-
 			return true;
 		}
 		
