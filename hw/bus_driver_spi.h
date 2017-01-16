@@ -1,3 +1,5 @@
+#pragma once
+
 #include "bus_driver_interface.h"
 
 namespace gameAmbiance

@@ -1,3 +1,5 @@
+#pragma once
+
 #include "display_font.h"
 
 namespace gameAmbiance

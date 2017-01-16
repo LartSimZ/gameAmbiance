@@ -1,3 +1,5 @@
+#pragma once
+
 #include "display_pixel_driver_interface.h"
 
 namespace gameAmbiance

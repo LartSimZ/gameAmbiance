@@ -1,3 +1,5 @@
+#pragma once
+
 #include "../hw/display_pixel_driver_interface.h"
 #include "display_font.h"
 

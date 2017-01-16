@@ -1,3 +1,5 @@
+#pragma once
+
 #include "../base/type_defs.h"
 
 namespace gameAmbiance

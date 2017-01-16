@@ -1,3 +1,5 @@
+#pragma once
+
 #include "display_driver_interface.h"
 #include "bus_driver_interface.h"
 
