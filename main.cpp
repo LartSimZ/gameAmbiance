@@ -6,6 +6,7 @@
 #include "hw/bus_driver_spi.h"
 #include "hw/display_driver_ssd1306.h"
 #include "ui/display_area.h"
+#include "ui/display_font_5x7.h"
 
 int main ( int argc,char **argv ) {
 	
@@ -20,8 +21,8 @@ int main ( int argc,char **argv ) {
 	gameAmbiance::ui::display_area topArea(fullArea, 0, 0, 128, 16);
 	gameAmbiance::ui::display_area mainArea(fullArea, 0, 16, 128, 48);
 
-	topArea.putText("BOOTING ...", PXL_COLOR_ON, SS, font);
-	mainArea.putText("Display ... OK!\n", PXL_COLOR_ON, true, font);
+	topArea.putText("BOOTING ...", 2, PXL_COLOR_ON, font);
+	mainArea.putText("Display ... OK!\n", 1, PXL_COLOR_ON, font);
 	mainArea.putText("Camera ...", 1, PXL_COLOR_ON, font);
 	
     // raspicam::RaspiCam Camera; //Cmaera object
