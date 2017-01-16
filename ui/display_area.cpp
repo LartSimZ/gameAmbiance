@@ -1,4 +1,3 @@
-#include <math.h>
 #include "display_area.h"
 
 namespace gameAmbiance
