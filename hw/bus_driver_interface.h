@@ -1,3 +1,5 @@
+#include "../base/type_defs.h"
+
 namespace gameAmbiance
 {
 	namespace hw
