@@ -1,4 +1,5 @@
 #include "../hw/display_pixel_driver_interface.h"
+#include "display_font.h"
 
 namespace gameAmbiance
 {
@@ -27,11 +28,11 @@ namespace gameAmbiance
             void drawHLine(int16_t x0, int16_t y0, int16_t w, uint32_t color);
             void drawRect(int16_t x, int16_t y, int16_t w, int16_t h, uint32_t color);
             void fillRect(int16_t x, int16_t y, int16_t w, int16_t h, uint32_t color);
-            void drawChar(int16_t x, int16_t y, char c, uint8_t fontSize, uint32_t color, const DisplayFont& font);
-            void drawText(int16_t x, int16_t y, const std::string& text, uint8_t fontSize, uint32_t color, const DisplayFont& font);
+            void drawChar(int16_t x, int16_t y, char c, uint8_t fontSize, uint32_t color, const display_font& font);
+            void drawText(int16_t x, int16_t y, const std::string& text, uint8_t fontSize, uint32_t color, const display_font& font);
             void setCursorPos(int16_t x, int16_t y);
-            void putChar(char c, uint8_t fontSize, uint32_t color, const DisplayFont& font);
-            void putText(const std::string& text, uint8_t fontSize, uint32_t color, const DisplayFont& font);
+            void putChar(char c, uint8_t fontSize, uint32_t color, const display_font& font);
+            void putText(const std::string& text, uint8_t fontSize, uint32_t color, const display_font& font);
         };
     }
 }

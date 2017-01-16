@@ -15,6 +15,7 @@ int main ( int argc,char **argv ) {
 	bus.init();
 	display.init();
 
+    gameAmbiance::ui::display_font_5x7 font;
 	gameAmbiance::ui::display_area fullArea(display, 0, 0, 128, 64);
 	gameAmbiance::ui::display_area topArea(fullArea, 0, 0, 128, 16);
 	gameAmbiance::ui::display_area mainArea(fullArea, 0, 16, 128, 48);

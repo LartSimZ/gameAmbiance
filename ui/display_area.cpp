@@ -145,7 +145,7 @@ namespace gameAmbiance
 			}
 		}
 
-		void display_area::drawChar(int16_t x, int16_t y, char c, uint8_t fontSize, uint32_t color, const DisplayFont& font)
+		void display_area::drawChar(int16_t x, int16_t y, char c, uint8_t fontSize, uint32_t color, const display_font& font)
 		{
 			if ((x >= _areaWidth) || // Clip right
 				(y >= _areaHeight) || // Clip bottom
@@ -202,7 +202,7 @@ namespace gameAmbiance
 			_cursorPosY = y;
 		}
 
-		void display_area::putChar(char c, uint8_t fontSize, uint32_t color, const DisplayFont& font)
+		void display_area::putChar(char c, uint8_t fontSize, uint32_t color, const display_font& font)
 		{
 			if (c != '\n')
 			{
@@ -216,7 +216,7 @@ namespace gameAmbiance
 			}
 		}
 
-		void display_area::drawText(int16_t x, int16_t y, const std::string& text, uint8_t fontSize, uint32_t color, const DisplayFont& font)
+		void display_area::drawText(int16_t x, int16_t y, const std::string& text, uint8_t fontSize, uint32_t color, const display_font& font)
 		{
 			uint8_t textLen = text.length();
 
@@ -226,7 +226,7 @@ namespace gameAmbiance
 			}
 		}
 
-		void display_area::putText(const std::string& text, uint8_t fontSize, uint32_t color, const DisplayFont& font)
+		void display_area::putText(const std::string& text, uint8_t fontSize, uint32_t color, const display_font& font)
 		{
 			uint8_t textLen = text.length();
 
