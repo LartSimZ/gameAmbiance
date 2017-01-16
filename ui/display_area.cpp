@@ -4,7 +4,7 @@ namespace gameAmbiance
 {
     namespace ui
     {
-		display_area::display_area(gameAmbiance::hw::display_pixel_driver& pxlDriver, int16_t x, int16_t y, int16_t areaWidth, int16_t areaHeight)
+		display_area::display_area(gameAmbiance::hw::display_pixel_driver_interface& pxlDriver, int16_t x, int16_t y, int16_t areaWidth, int16_t areaHeight)
 		: _pxlDriver(pxlDriver)
 		, _x(x)
 		, _y(y)
