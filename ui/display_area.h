@@ -7,10 +7,10 @@ namespace gameAmbiance
 {
     namespace ui
     {
-       class display_area : public display_pixel_driver_interface
+       class display_area : public gameAmbiance::hw::display_pixel_driver_interface
         {
         private:
-            gameAmbiance::hw::display_pixel_driver& _pxlDriver;
+            gameAmbiance::hw::display_pixel_driver_interface& _pxlDriver;
             int16_t _x;
             int16_t _y;
             int16_t _areaWidth;
@@ -19,7 +19,7 @@ namespace gameAmbiance
             int16_t _cursorPosY;
 
         public:
-            display_area(gameAmbiance::hw::display_pixel_driver& pxlDriver, int16_t x, int16_t y, int16_t areaWidth, int16_t areaHeight);
+            display_area(gameAmbiance::hw::display_pixel_driver_interface& pxlDriver, int16_t x, int16_t y, int16_t areaWidth, int16_t areaHeight);
 
             virtual void clear(uint32_t color) override;
             virtual void setPixel(int16_t x, int16_t y, uint32_t color) override;
