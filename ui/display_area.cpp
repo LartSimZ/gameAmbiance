@@ -1,3 +1,4 @@
+#include <math.h>
 #include "display_area.h"
 
 namespace gameAmbiance
@@ -17,7 +18,7 @@ namespace gameAmbiance
 
 		void display_area::clear(uint32_t color)
 		{
-			_pxlDriver.clear(on);
+			_pxlDriver.clear(color);
 		}
 
 		void display_area::setPixel(int16_t x, int16_t y, uint32_t color)
@@ -30,10 +31,10 @@ namespace gameAmbiance
 				return; // Out of area, does nothing
 			}
 
-			_pxlDriver.setPixel(_x + x, _y + y, on);
+			_pxlDriver.setPixel(_x + x, _y + y, color);
 		}
 
-		void display_area::render() override
+		void display_area::render()
 		{
 			_pxlDriver.render();
 		}
@@ -43,14 +44,14 @@ namespace gameAmbiance
 			int16_t steep = abs(y1 - y0) > abs(x1 - x0);
 			if (steep)
 			{
-				_swap_int16_t(x0, y0);
-				_swap_int16_t(x1, y1);
+				_swap_int(x0, y0);
+				_swap_int(x1, y1);
 			}
 
 			if (x0 > x1)
 			{
-				_swap_int16_t(x0, x1);
-				_swap_int16_t(y0, y1);
+				_swap_int(x0, x1);
+				_swap_int(y0, y1);
 			}
 
 			int16_t dx, dy;
@@ -72,11 +73,11 @@ namespace gameAmbiance
 			{
 				if (steep)
 				{
-					setPixel(y0, x0, on);
+					setPixel(y0, x0, color);
 				}
 				else
 				{
-					setPixel(x0, y0, on);
+					setPixel(x0, y0, color);
 				}
 				err -= dy;
 				if (err < 0) {
@@ -88,26 +89,26 @@ namespace gameAmbiance
 
 		void display_area::drawVLine(int16_t x0, int16_t y0, int16_t h, uint32_t color)
 		{
-			drawLine(x0, y0, x0, y0 + h - 1, on);
+			drawLine(x0, y0, x0, y0 + h - 1, color);
 		}
 
 		void display_area::drawHLine(int16_t x0, int16_t y0, int16_t w, uint32_t color)
 		{
-			drawLine(x0, y0, x0 + w - 1, y0, on);
+			drawLine(x0, y0, x0 + w - 1, y0, color);
 		}
 
 		void display_area::drawRect(int16_t x, int16_t y, int16_t w, int16_t h, uint32_t color)
 		{
-			drawHLine(x, y, w, on);
-			drawHLine(x, y + h - 1, w, on);
-			drawVLine(x, y, h, on);
-			drawVLine(x + w - 1, y, h, on);
+			drawHLine(x, y, w, color);
+			drawHLine(x, y + h - 1, w, color);
+			drawVLine(x, y, h, color);
+			drawVLine(x + w - 1, y, h, color);
 		}
 
 		void display_area::fillRect(int16_t x, int16_t y, int16_t w, int16_t h, uint32_t color)
 		{
 			for (int16_t i = x; i < x + w; i++) {
-				drawVLine(i, y, h, on);
+				drawVLine(i, y, h, color);
 			}
 		}
 
@@ -119,10 +120,10 @@ namespace gameAmbiance
 			int16_t x = 0;
 			int16_t y = r;
 
-			setPixel(x0, y0 + r, on);
-			setPixel(x0, y0 - r, on);
-			setPixel(x0 + r, y0, on);
-			setPixel(x0 - r, y0, on);
+			setPixel(x0, y0 + r, color);
+			setPixel(x0, y0 - r, color);
+			setPixel(x0 + r, y0, color);
+			setPixel(x0 - r, y0, color);
 
 			while (x<y) {
 				if (f >= 0) {
@@ -134,14 +135,14 @@ namespace gameAmbiance
 				ddF_x += 2;
 				f += ddF_x;
 
-				setPixel(x0 + x, y0 + y, on);
-				setPixel(x0 - x, y0 + y, on);
-				setPixel(x0 + x, y0 - y, on);
-				setPixel(x0 - x, y0 - y, on);
-				setPixel(x0 + y, y0 + x, on);
-				setPixel(x0 - y, y0 + x, on);
-				setPixel(x0 + y, y0 - x, on);
-				setPixel(x0 - y, y0 - x, on);
+				setPixel(x0 + x, y0 + y, color);
+				setPixel(x0 - x, y0 + y, color);
+				setPixel(x0 + x, y0 - y, color);
+				setPixel(x0 - x, y0 - y, color);
+				setPixel(x0 + y, y0 + x, color);
+				setPixel(x0 - y, y0 + x, color);
+				setPixel(x0 + y, y0 - x, color);
+				setPixel(x0 - y, y0 - x, color);
 			}
 		}
 
@@ -173,22 +174,22 @@ namespace gameAmbiance
 					{
 						if (fontSize == 1) // default size
 						{
-							setPixel(x + i, y + j, on);
+							setPixel(x + i, y + j, color);
 						}
 						else
 						{  // big size
-							fillRect(x + (i*fontSize), y + (j*fontSize), fontSize, fontSize, on);
+							fillRect(x + (i*fontSize), y + (j*fontSize), fontSize, fontSize, color);
 						}
 					}
 					else //if (bg != color)
 					{
 						if (fontSize == 1) // default size
 						{
-							setPixel(x + i, y + j, !on);
+							setPixel(x + i, y + j, !color);
 						}
 						else
 						{  // big size
-							fillRect(x + i*fontSize, y + j*fontSize, fontSize, fontSize, !on);
+							fillRect(x + i*fontSize, y + j*fontSize, fontSize, fontSize, !color);
 						}
 					}
 					line >>= 1;
@@ -206,7 +207,7 @@ namespace gameAmbiance
 		{
 			if (c != '\n')
 			{
-				drawChar(_cursorPosX, _cursorPosY, c, fontSize, on, font);
+				drawChar(_cursorPosX, _cursorPosY, c, fontSize, color, font);
 				_cursorPosX += fontSize*(1+font.charWidth());
 			}
 			else
@@ -222,7 +223,7 @@ namespace gameAmbiance
 
 			for (uint8_t c = 0; c < textLen; ++c, x = x + fontSize*(font.charWidth() + 1))
 			{
-				drawChar(x, y, text[c], fontSize, on, font);
+				drawChar(x, y, text[c], fontSize, color, font);
 			}
 		}
 
@@ -232,7 +233,7 @@ namespace gameAmbiance
 
 			for (uint8_t c = 0; c < textLen; ++c)
 			{
-				putChar(text[c], fontSize, on, font);
+				putChar(text[c], fontSize, color, font);
 			}
 		}
     }
