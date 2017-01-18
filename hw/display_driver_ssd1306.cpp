@@ -107,11 +107,11 @@ namespace gameAmbiance
             _busDriver.setPinOutputMode(_dcPin);
             _busDriver.setPinOutputMode(_rstPin);
 
-			bcm2835_gpio_write(_pinRST, HIGH);
+			bcm2835_gpio_write(_rstPin, HIGH);
 			delay(1000);
-			bcm2835_gpio_write(_pinRST, LOW);
+			bcm2835_gpio_write(_rstPin, LOW);
 			delay(10000);
-			bcm2835_gpio_write(_pinRST, HIGH);
+			bcm2835_gpio_write(_rstPin, HIGH);
 
             sendCommand(SSD_Display_Off);                    // 0xAE
             sendCommand(SSD1306_SETDISPLAYCLOCKDIV, 0x80);      // 0xD5 + the suggested ratio 0x80
