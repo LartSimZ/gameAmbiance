@@ -35,6 +35,8 @@ namespace gameAmbiance
 
 		bool bus_driver_spi::init() const
 		{
+			bcm2835_init();
+
 			if (!bcm2835_spi_begin())
 			{
 				return false;
