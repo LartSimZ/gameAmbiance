@@ -1,4 +1,5 @@
 #include "display_driver_ssd1306.h"
+#include <bcm2835.h>
 #include <cstring>
 
 #define _BV(bit) (1 << (bit))
@@ -103,15 +104,14 @@ namespace gameAmbiance
 
         void display_driver_ssd1306::init()
         {
-                        // SPI Reset
-			// bcm2835_gpio_write(_pinRST, HIGH);
-			// delay(1000);
-			// bcm2835_gpio_write(_pinRST, LOW);
-			// delay(10000);
-			// bcm2835_gpio_write(_pinRST, HIGH);
-
             _busDriver.setPinOutputMode(_dcPin);
             _busDriver.setPinOutputMode(_rstPin);
+
+			bcm2835_gpio_write(_pinRST, HIGH);
+			delay(1000);
+			bcm2835_gpio_write(_pinRST, LOW);
+			delay(10000);
+			bcm2835_gpio_write(_pinRST, HIGH);
 
             sendCommand(SSD_Display_Off);                    // 0xAE
             sendCommand(SSD1306_SETDISPLAYCLOCKDIV, 0x80);      // 0xD5 + the suggested ratio 0x80
