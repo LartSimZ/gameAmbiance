@@ -79,7 +79,7 @@ namespace gameAmbiance
 
 		void display_driver_ssd1306::sendData(uint8_t* buf, uint32_t len) const
 		{
-            _busDriver.sendCommand(_dcPin, buf, len);
+            _busDriver.sendData(_dcPin, buf, len);
 		}
 
         display_driver_ssd1306::display_driver_ssd1306(const bus_driver_interface& busDriver, uint8_t dcPin, uint8_t rstPin, int16_t width, int16_t height)
@@ -137,7 +137,7 @@ namespace gameAmbiance
         void display_driver_ssd1306::clear(uint32_t color)
         {
             int c = color ? 0xFF : 0x00;
-            std::memset(_screenBuffer, c, _screenWidth*_screenHeight / 8);
+            memset(_screenBuffer, c, _screenWidth*_screenHeight / 8);
         }
 
         void display_driver_ssd1306::setPixel(int16_t x, int16_t y, uint32_t color)
@@ -159,9 +159,9 @@ namespace gameAmbiance
 
         void display_driver_ssd1306::render()
         {
-            _busDriver.sendCommand(SSD1306_SETLOWCOLUMN | 0x0); // low col = 0
-            _busDriver.sendCommand(SSD1306_SETHIGHCOLUMN | 0x0); // hi col = 0
-            _busDriver.sendCommand(SSD1306_SETSTARTLINE | 0x0); // line #0
+            _busDriver.sendCommand((_uint8_t)(SSD1306_SETLOWCOLUMN | 0x0)); // low col = 0
+            _busDriver.sendCommand((_uint8_t)(SSD1306_SETHIGHCOLUMN | 0x0)); // hi col = 0
+            _busDriver.sendCommand((_uint8_t)(SSD1306_SETSTARTLINE | 0x0)); // line #0
 
             _busDriver.sendData(_screenBuffer, _screenWidth*_screenHeight/8);
         }
