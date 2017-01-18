@@ -1,8 +1,6 @@
-#include "display_driver_interface.h"
-
+#include "display_driver_ssd1306.h"
 
 #define _BV(bit) (1 << (bit))
-
 
 #define SSD_Command_Mode			0x00 	/* C0 and DC bit are 0 				 */
 #define SSD_Data_Mode					0x40	/* C0 bit is 0 and DC bit is 1 */
