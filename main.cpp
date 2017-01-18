@@ -33,6 +33,7 @@ int main ( int argc,char **argv ) {
 	topArea.putText("BOOTING ...", 2, PXL_COLOR_ON, font);
 	mainArea.putText("Display ... OK!\n", 1, PXL_COLOR_ON, font);
 	mainArea.putText("Camera ...", 1, PXL_COLOR_ON, font);
+    fullArea.render();
 	
     // raspicam::RaspiCam Camera; //Cmaera object
     // //Open camera 
