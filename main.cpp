@@ -18,6 +18,7 @@ int main ( int argc,char **argv ) {
     if( !bus.init() )
     {
         std::cout << "Failed to initialize SPI bus !" << std::endl;
+        return -1;
     }
     std::cout << "SPI bus ready !" << std::endl;
 

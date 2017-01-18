@@ -26,7 +26,6 @@ namespace gameAmbiance
 
 		bus_driver_spi::bus_driver_spi()
 		{
-			init();
 		}
 
 		bus_driver_spi::~bus_driver_spi()
