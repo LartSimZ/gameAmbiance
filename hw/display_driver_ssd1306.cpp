@@ -1,4 +1,5 @@
 #include "display_driver_ssd1306.h"
+#include <cstring>
 
 #define _BV(bit) (1 << (bit))
 
@@ -137,7 +138,7 @@ namespace gameAmbiance
         void display_driver_ssd1306::clear(uint32_t color)
         {
             int c = color ? 0xFF : 0x00;
-            memset(_screenBuffer, c, _screenWidth*_screenHeight / 8);
+            std::memset(_screenBuffer, c, _screenWidth*_screenHeight / 8);
         }
 
         void display_driver_ssd1306::setPixel(int16_t x, int16_t y, uint32_t color)
@@ -159,11 +160,11 @@ namespace gameAmbiance
 
         void display_driver_ssd1306::render()
         {
-            _busDriver.sendCommand((_uint8_t)(SSD1306_SETLOWCOLUMN | 0x0)); // low col = 0
-            _busDriver.sendCommand((_uint8_t)(SSD1306_SETHIGHCOLUMN | 0x0)); // hi col = 0
-            _busDriver.sendCommand((_uint8_t)(SSD1306_SETSTARTLINE | 0x0)); // line #0
+            _busDriver.sendCommand((uint8_t)(SSD1306_SETLOWCOLUMN | 0x0)); // low col = 0
+            _busDriver.sendCommand((uint8_t)(SSD1306_SETHIGHCOLUMN | 0x0)); // hi col = 0
+            _busDriver.sendCommand((uint8_t)(SSD1306_SETSTARTLINE | 0x0)); // line #0
 
-            _busDriver.sendData(_screenBuffer, _screenWidth*_screenHeight/8);
+            _busDriver.sendData(_dcPin, _screenBuffer, _screenWidth*_screenHeight/8);
         }
     }
 }
