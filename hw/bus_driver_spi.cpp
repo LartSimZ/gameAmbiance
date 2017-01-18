@@ -60,7 +60,7 @@ namespace gameAmbiance
 		
 		void bus_driver_spi::setPinInputMode(uint8_t pin) const
 		{
-			bcm2835_gpio_fsel(pin, BCM2835_GPIO_FSEL_INTP);
+			bcm2835_gpio_fsel(pin, BCM2835_GPIO_FSEL_INPT);
 		}
 
 		void bus_driver_spi::sendCommand(uint8_t dcPin, uint8_t c) const
