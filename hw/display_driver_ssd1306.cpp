@@ -160,11 +160,11 @@ namespace gameAmbiance
 
         void display_driver_ssd1306::render()
         {
-            _busDriver.sendCommand((uint8_t)(SSD1306_SETLOWCOLUMN | 0x0)); // low col = 0
-            _busDriver.sendCommand((uint8_t)(SSD1306_SETHIGHCOLUMN | 0x0)); // hi col = 0
-            _busDriver.sendCommand((uint8_t)(SSD1306_SETSTARTLINE | 0x0)); // line #0
+            sendCommand((uint8_t)(SSD1306_SETLOWCOLUMN | 0x0)); // low col = 0
+            sendCommand((uint8_t)(SSD1306_SETHIGHCOLUMN | 0x0)); // hi col = 0
+            sendCommand((uint8_t)(SSD1306_SETSTARTLINE | 0x0)); // line #0
 
-            _busDriver.sendData(_dcPin, _screenBuffer, _screenWidth*_screenHeight/8);
+            sendData(_screenBuffer, _screenWidth*_screenHeight/8);
         }
     }
 }
