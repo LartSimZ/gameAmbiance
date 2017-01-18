@@ -10,11 +10,19 @@
 
 int main ( int argc,char **argv ) {
 	
+    std::cout << "Starting ..." << std::endl;
+
 	gameAmbiance::hw::bus_driver_spi bus;
 	gameAmbiance::hw::display_driver_ssd1306 display(bus, 18, 22, 128, 64);
 
-	bus.init();
+    if( !bus.init() )
+    {
+        std::cout << "Failed to initialize SPI bus !" << std::endl;
+    }
+    std::cout << "SPI bus ready !" << std::endl;
+
 	display.init();
+    std::cout << "Display ready !" << std::endl;
 
     gameAmbiance::ui::display_font_5x7 font;
 	gameAmbiance::ui::display_area fullArea(display, 0, 0, 128, 64);
