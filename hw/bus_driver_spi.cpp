@@ -1,6 +1,6 @@
 #include "bus_driver_spi.h"
 
-#include <bmc2835.h>
+#include <bcm2835.h>
 
 namespace gameAmbiance
 {
