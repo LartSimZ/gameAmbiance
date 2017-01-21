@@ -12,6 +12,7 @@ namespace gameAmbiance
 		, _areaHeight(areaHeight)
 		, _cursorPosX(0)
 		, _cursorPosY(0)
+		, _textBkColor(PXL_COLOR_OFF)
 		{
 		}
 
@@ -145,6 +146,11 @@ namespace gameAmbiance
 			}
 		}
 
+		void display_area::setTextBkColor(uint32_t color)
+		{
+			_textBkColor = color;
+		}
+		
 		void display_area::drawChar(int16_t x, int16_t y, char c, uint8_t fontSize, uint32_t color, const display_font& font)
 		{
 			if ((x >= _areaWidth) || // Clip right
@@ -180,7 +186,7 @@ namespace gameAmbiance
 							fillRect(x + (i*fontSize), y + (j*fontSize), fontSize, fontSize, color);
 						}
 					}
-					else //if (bg != color)
+					else if (_textBkColor != color)
 					{
 						if (fontSize == 1) // default size
 						{
@@ -188,7 +194,7 @@ namespace gameAmbiance
 						}
 						else
 						{  // big size
-							fillRect(x + i*fontSize, y + j*fontSize, fontSize, fontSize, !color);
+							fillRect(x + i*fontSize, y + j*fontSize, fontSize, fontSize, _textBkColor);
 						}
 					}
 					line >>= 1;

@@ -108,9 +108,9 @@ namespace gameAmbiance
             _busDriver.setPinOutputMode(_rstPin);
 
 			bcm2835_gpio_write(_rstPin, HIGH);
-			delay(1000);
+			delay(250);
 			bcm2835_gpio_write(_rstPin, LOW);
-			delay(10000);
+			delay(250);
 			bcm2835_gpio_write(_rstPin, HIGH);
 
             sendCommand(SSD_Display_Off);                    // 0xAE
@@ -143,6 +143,11 @@ namespace gameAmbiance
 
         void display_driver_ssd1306::setPixel(int16_t x, int16_t y, uint32_t color)
         {
+			if(color == PXL_COLOR_TRANSPARENT)
+			{
+				return;
+			}
+			
             if ((x < 0) || (x >= _screenWidth) || (y < 0) || (y >= _screenHeight))
             {
                 return;

@@ -1,12 +1,12 @@
 #include <ctime>
 #include <fstream>
 #include <iostream>
-// #include <raspicam/raspicam.h>
 
 #include "hw/bus_driver_spi.h"
 #include "hw/display_driver_ssd1306.h"
 #include "ui/display_area.h"
 #include "ui/display_font_5x7.h"
+#include "hw/camera_driver_raspi.h"
 
 int main ( int argc,char **argv ) {
 	
@@ -29,10 +29,24 @@ int main ( int argc,char **argv ) {
 	gameAmbiance::ui::display_area fullArea(display, 0, 0, 128, 64);
 	gameAmbiance::ui::display_area topArea(fullArea, 0, 0, 128, 16);
 	gameAmbiance::ui::display_area mainArea(fullArea, 0, 16, 128, 48);
-
-	topArea.putText("BOOTING ...", 2, PXL_COLOR_ON, font);
-	mainArea.putText("Display ... OK!\n", 1, PXL_COLOR_ON, font);
+	
+	topArea.drawText(0, 0, "BOOTING ...", 2, PXL_COLOR_ON, font);
+	mainArea.putText("Display ... OK\n", 1, PXL_COLOR_ON, font);
 	mainArea.putText("Camera ...", 1, PXL_COLOR_ON, font);
+	fullArea.render();
+	
+	gameAmbiance::hw::camera_driver_raspi camera;
+	if(!camera.init())
+	{
+		topArea.drawText(0, 0, "FAILED !!!", 2, PXL_COLOR_ON, font);
+		mainArea.putText(" ERR!!!", 1, PXL_COLOR_ON, font);
+		fullArea.render();
+		std::cout << "Failed to initialize camera !" << std::endl;
+		return -1;
+	}
+	mainArea.putText(" OK", 1, PXL_COLOR_ON, font);
+	fullArea.render();
+	std::cout << "Camera ready !" << std::endl;
 	
     // raspicam::RaspiCam Camera; //Cmaera object
     // //Open camera 
