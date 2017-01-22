@@ -140,8 +140,15 @@ namespace gameAmbiance
             int c = color ? 0xFF : 0x00;
             std::memset(_screenBuffer, c, _screenWidth*_screenHeight / 8);
         }
+		
+		uint32_t display_driver_ssd1306::getPixel(int32_t x, int32_t y) const
+        {
+			uint8_t * target = _screenBuffer + (x + (y / 8)*_screenWidth);
+			uint8_t bit = _BV((y % 8));
+			return *target & bit == bit ? PXL_COLOR_ON : PXL_COLOR_OFF;
+        }
 
-        void display_driver_ssd1306::setPixel(int16_t x, int16_t y, uint32_t color)
+        void display_driver_ssd1306::setPixel(int32_t x, int32_t y, uint32_t color)
         {
 			if(color == PXL_COLOR_TRANSPARENT)
 			{
@@ -155,13 +162,24 @@ namespace gameAmbiance
 
             // Get where to do the change in the buffer
             uint8_t * target = _screenBuffer + (x + (y / 8)*_screenWidth);
-
+			uint8_t bit = _BV((y % 8));
+			
             // x is which column
-            if (color)
-                *target |= _BV((y % 8));
-            else
-                *target &= ~_BV((y % 8));
-        }
+            switch(color)
+			{
+			case PXL_COLOR_ON:
+                *target |= bit;
+				return;
+				
+			case PXL_COLOR_OFF:
+				*target &= ~bit;
+				return;
+				
+			case PXL_COLOR_INVERT:
+				((*target & bit) == bit) ? *target &= ~bit : *target |= bit;
+				return;
+			}
+		}
 
         void display_driver_ssd1306::render()
         {

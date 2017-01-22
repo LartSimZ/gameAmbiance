@@ -25,7 +25,17 @@ namespace gameAmbiance
 			_capture.release();
 		}
 		
-		bool camera_driver_opencv::getFrame(video_frame& frame)
+		uint32_t camera_driver_opencv::frameWidth() const
+		{
+			return 0;
+		}
+		
+		uint32_t camera_driver_opencv::frameHeight() const
+		{
+			return 0;
+		}
+		
+		bool camera_driver_opencv::readFrame(video_frame& frame)
 		{
 			return false;
 		}

@@ -4,7 +4,7 @@ namespace gameAmbiance
 {
     namespace ui
     {
-		display_area::display_area(gameAmbiance::hw::display_pixel_driver_interface& pxlDriver, int16_t x, int16_t y, int16_t areaWidth, int16_t areaHeight)
+		display_area::display_area(gameAmbiance::hw::display_pixel_driver_interface& pxlDriver, int32_t x, int32_t y, uint32_t areaWidth, uint32_t areaHeight)
 		: _pxlDriver(pxlDriver)
 		, _x(x)
 		, _y(y)
@@ -15,13 +15,29 @@ namespace gameAmbiance
 		, _textBkColor(PXL_COLOR_OFF)
 		{
 		}
+		
+		uint32_t display_area::width() const
+		{
+			return _areaWidth;
+		}
+		
+		uint32_t display_area::height() const
+		{
+			return _areaHeight;
+		}
 
 		void display_area::clear(uint32_t color)
 		{
-			_pxlDriver.clear(color);
+			fillRect(0, 0, _areaWidth, _areaHeight, color);
+			setCursorPos(0, 0);
+		}
+		
+		uint32_t display_area::getPixel(int32_t x, int32_t y) const
+		{
+			return _pxlDriver.getPixel(_x + x, _y + y);
 		}
 
-		void display_area::setPixel(int16_t x, int16_t y, uint32_t color)
+		void display_area::setPixel(int32_t x, int32_t y, uint32_t color)
 		{
 			if (x < 0
 				|| x >= _areaWidth
@@ -186,7 +202,7 @@ namespace gameAmbiance
 							fillRect(x + (i*fontSize), y + (j*fontSize), fontSize, fontSize, color);
 						}
 					}
-					else if (_textBkColor != color)
+					else if (_textBkColor != color && _textBkColor != PXL_COLOR_TRANSPARENT)
 					{
 						if (fontSize == 1) // default size
 						{
@@ -230,6 +246,43 @@ namespace gameAmbiance
 			{
 				drawChar(x, y, text[c], fontSize, color, font);
 			}
+		}
+		
+		void display_area::drawAlignedText(uint8_t horzAlign, uint8_t vertAlign, const std::string& text, uint8_t fontSize, uint32_t color, const display_font& font)
+		{
+			uint32_t textWidth(0), textHeight(0);
+			font.computeTextBoundingSize(text, fontSize, textWidth, textHeight);
+			
+			int16_t x(0), y(0);
+			switch(horzAlign)
+			{
+				case TEXT_ALIGN_LEFT:
+				x = 0;
+				break;
+				
+				case TEXT_ALIGN_MIDDLE:
+				x = (_areaWidth - textWidth) / 2;
+				break;
+				
+				case TEXT_ALIGN_RIGHT:
+				x = _areaWidth - textWidth;
+				break;
+			}
+			switch(vertAlign)
+			{
+				case TEXT_ALIGN_TOP:
+				y = 0;
+				break;
+				
+				case TEXT_ALIGN_MIDDLE:
+				y = (_areaHeight - textHeight) / 2;
+				break;
+				
+				case TEXT_ALIGN_BOTTOM:
+				y = _areaHeight - textHeight;
+				break;
+			}
+			drawText(x, y, text, fontSize, color, font);
 		}
 
 		void display_area::putText(const std::string& text, uint8_t fontSize, uint32_t color, const display_font& font)

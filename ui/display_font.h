@@ -18,7 +18,7 @@ namespace gameAmbiance
         public:
             uint8_t charWidth() const;
             uint8_t getByte(char c, uint8_t byte) const;
-            void computeTextBoundingSize(const std::string& text, uint8_t fontSize, uint8_t& cx, uint8_t& cy) const;
+            void computeTextBoundingSize(const std::string& text, uint8_t fontSize, uint32_t& cx, uint32_t& cy) const;
         };
     }
 }

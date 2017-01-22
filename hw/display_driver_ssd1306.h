@@ -30,7 +30,8 @@ namespace gameAmbiance
 			virtual void term() override;
 
 			virtual void clear(uint32_t color) override;
-			virtual void setPixel(int16_t x, int16_t y, uint32_t color) override;
+			virtual uint32_t getPixel(int32_t x, int32_t y) const override;
+			virtual void setPixel(int32_t x, int32_t y, uint32_t color) override;
 			virtual void render() override;
 		};
 	}

@@ -21,10 +21,10 @@ namespace gameAmbiance
             return _charImages[c*_charWidth + byte];
         }
 
-        void display_font::computeTextBoundingSize(const std::string& text, uint8_t fontSize, uint8_t& cx, uint8_t& cy) const
+        void display_font::computeTextBoundingSize(const std::string& text, uint8_t fontSize, uint32_t& cx, uint32_t& cy) const
         {
             cx = (text.length() * _charWidth + text.length() - 1) * fontSize;
-            cy = 7;
+            cy = 7 * fontSize;
         }
     }
 }

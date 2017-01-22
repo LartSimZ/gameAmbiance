@@ -21,21 +21,24 @@ namespace gameAmbiance
 			
 			bool alloc(size_t newSize)
 			{
-				free();
-				
-				if(newSize > 0)
+				if( newSize != byteSize)
 				{
-					try
+					free();
+					
+					if(newSize > 0)
 					{
-						bytes = new uint8_t[newSize];
-						byteSize = newSize;
-					}
-					catch(std::bad_alloc& e)
-					{
-						bytes = NULL;
-						byteSize = 0;
-						
-						return false;
+						try
+						{
+							bytes = new uint8_t[newSize];
+							byteSize = newSize;
+						}
+						catch(std::bad_alloc& e)
+						{
+							bytes = NULL;
+							byteSize = 0;
+							
+							return false;
+						}
 					}
 				}
 				
@@ -61,7 +64,9 @@ namespace gameAmbiance
 			virtual bool init() = 0;
 			virtual void term() = 0;
 			
-			virtual bool getFrame(video_frame& frame) = 0;
+			virtual uint32_t frameWidth() const = 0;
+			virtual uint32_t frameHeight() const = 0;
+			virtual bool readFrame(video_frame& frame) = 0;
 		};
 	}
 }

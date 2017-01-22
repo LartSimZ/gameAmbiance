@@ -20,7 +20,9 @@ namespace gameAmbiance
 			virtual bool init() override;
 			virtual void term() override;
 			
-			virtual bool getFrame(video_frame& frame) override;
+			virtual uint32_t frameWidth() const override;
+			virtual uint32_t frameHeight() const override;
+			virtual bool readFrame(video_frame& frame) override;
 		};
 	}
 }
